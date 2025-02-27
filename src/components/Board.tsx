@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
+import { Board as BoardType, Player } from '../types';
 
-const Board = ({ board, onCellClick, currentPlayer, canPlaceDisc }) => {
+interface BoardProps {
+  board: BoardType;
+  onCellClick: (row: number, col: number) => void;
+  currentPlayer: Player;
+  canPlaceDisc: (board: BoardType, row: number, col: number, player: Player) => boolean;
+}
+
+const Board: React.FC<BoardProps> = ({ board, onCellClick, currentPlayer, canPlaceDisc }) => {
   return (
-    <BoardContainer>
+    <BoardContainer data-testid="board">
       {board.map((row, rowIndex) => (
         <BoardRow key={rowIndex}>
           {row.map((cell, colIndex) => (
@@ -12,7 +20,8 @@ const Board = ({ board, onCellClick, currentPlayer, canPlaceDisc }) => {
               key={`${rowIndex}-${colIndex}`}
               value={cell}
               onClick={() => onCellClick(rowIndex, colIndex)}
-              isValidMove={canPlaceDisc(rowIndex, colIndex, currentPlayer)}
+              isValidMove={canPlaceDisc(board, rowIndex, colIndex, currentPlayer)}
+              data-testid={`cell-${rowIndex}-${colIndex}`}
             />
           ))}
         </BoardRow>

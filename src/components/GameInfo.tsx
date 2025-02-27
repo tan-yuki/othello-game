@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import Disc from './Disc';
+import { Player, Scores } from '../types';
 
-const GameInfo = ({ currentPlayer, scores, gameOver, onReset }) => {
-  const getWinner = () => {
+interface GameInfoProps {
+  currentPlayer: Player;
+  scores: Scores;
+  gameOver: boolean;
+  onReset: () => void;
+}
+
+const GameInfo: React.FC<GameInfoProps> = ({ currentPlayer, scores, gameOver, onReset }) => {
+  const getWinner = (): Player | 'draw' => {
     if (scores.black > scores.white) return 'black';
     if (scores.white > scores.black) return 'white';
     return 'draw';
@@ -29,7 +37,7 @@ const GameInfo = ({ currentPlayer, scores, gameOver, onReset }) => {
               <WinnerText>引き分け</WinnerText>
             ) : (
               <>
-                <Disc color={getWinner()} />
+                <Disc color={getWinner() as Player} />
                 <WinnerText>
                   {getWinner() === 'black' ? '黒' : '白'}の勝利！
                 </WinnerText>

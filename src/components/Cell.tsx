@@ -1,17 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 import Disc from './Disc';
+import { CellValue } from '../types';
 
-const Cell = ({ value, onClick, isValidMove }) => {
+interface CellProps {
+  value: CellValue;
+  onClick: () => void;
+  isValidMove: boolean;
+  'data-testid'?: string;
+}
+
+const Cell: React.FC<CellProps> = ({ value, onClick, isValidMove, 'data-testid': dataTestId }) => {
   return (
-    <CellContainer onClick={onClick} $isValidMove={isValidMove}>
+    <CellContainer
+      onClick={onClick}
+      $isValidMove={isValidMove}
+      data-testid={dataTestId}
+      className={isValidMove ? 'valid-move' : ''}
+    >
       {value && <Disc color={value} />}
       {!value && isValidMove && <ValidMoveIndicator />}
     </CellContainer>
   );
 };
 
-const CellContainer = styled.div`
+interface CellContainerProps {
+  $isValidMove: boolean;
+}
+
+const CellContainer = styled.div<CellContainerProps>`
   width: 50px;
   height: 50px;
   background-color: #43a047;

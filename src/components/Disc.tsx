@@ -1,7 +1,12 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { Player } from '../types';
 
-const Disc = ({ color }) => {
+interface DiscProps {
+  color: Player;
+}
+
+const Disc: React.FC<DiscProps> = ({ color }) => {
   return <DiscContainer color={color} />;
 };
 
@@ -17,7 +22,11 @@ const flipAnimation = keyframes`
   }
 `;
 
-const DiscContainer = styled.div`
+interface DiscContainerProps {
+  color: Player;
+}
+
+const DiscContainer = styled.div<DiscContainerProps>`
   width: 40px;
   height: 40px;
   border-radius: 50%;
